@@ -48,7 +48,7 @@ class UrlController extends Controller
     }
 
     // Generate a short URL
-    $shortUrl = config('app.url') . '/' . Str::random(6); // Generate a random 6-character string
+    $shortUrl = url('') . '/' . Str::random(6); // Generate a random 6-character string
 
     // Create a new URL model
     $url = new UrlModel();
