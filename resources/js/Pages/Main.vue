@@ -27,6 +27,7 @@ const submit = () => {
     })
 }
 const copyUrl = (url) => {
+    console.log(url);
     navigator.clipboard.writeText(url);
     toast.success('URL copied to clipboard');
 };
