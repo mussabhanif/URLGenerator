@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [UrlController::class, 'index'])->name('main');
 Route::post('/generate_url', [UrlController::class, 'generate'])->name('url.generate');
-Route::get('r/{hash}', [UrlController::class, 'redirect'])->where('hash', '[A-Za-z0-9]{6}');
+Route::get('/{hash}', [UrlController::class, 'redirect'])->where('hash', '[A-Za-z0-9]{6}');
 
 
 // require __DIR__.'/auth.php';

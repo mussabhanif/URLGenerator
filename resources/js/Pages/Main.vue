@@ -27,10 +27,50 @@ const submit = () => {
     })
 }
 const copyUrl = (url) => {
-    console.log(url);
-    navigator.clipboard.writeText(url);
-    toast.success('URL copied to clipboard');
+    try {
+        navigator.clipboard.writeText(url)
+            .then(() => {
+                toast.success('URL copied to clipboard');
+            })
+            .catch((error) => {
+                console.error('Error copying to clipboard:', error);
+                fallbackCopyTextToClipboard(url);
+            });
+    } catch (error) {
+        console.error('Error accessing clipboard API:', error);
+        fallbackCopyTextToClipboard(url);
+    }
 };
+
+function fallbackCopyTextToClipboard(text) {
+    var textArea = document.createElement("textarea");
+    textArea.value = text;
+
+    // Make textarea non-editable to avoid flickering
+    textArea.setAttribute('readonly', '');
+
+    // Hide textarea from visual display
+    textArea.style.position = 'absolute';
+    textArea.style.left = '-9999px';
+
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    try {
+        var successful = document.execCommand('copy');
+        var msg = successful ? 'successful' : 'unsuccessful';
+        console.log('Fallback: Copying text command was ' + msg);
+        if (successful) {
+            toast.success('URL copied to clipboard');
+        } else {
+            toast.error('Failed to copy URL to clipboard');
+        }
+    } catch (err) {
+        console.error('Fallback: Oops, unable to copy', err);
+    }
+
+    document.body.removeChild(textArea);
+}
 </script>
 <template>
     <Head title="Generate your unique URLs"/>
